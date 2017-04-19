@@ -12,5 +12,12 @@ app.get('/', (req, res, next) => {
 });
 
 io.on('connection', (socket) => {
-  console.log(socket.id);
+  console.log('user: ' + socket.id + ' connected');
+  socket.on('send message', (msg) => {
+    io.emit('send message', msg);
+    console.log('user: ' + socket.id + ' send message: ' + msg);
+  })
+  socket.on('disconnect', () => {
+    console.log('user: ' + socket.id + ' disconnected');
+  })
 })
