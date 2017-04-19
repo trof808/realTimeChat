@@ -11,10 +11,18 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+      div#type_msg {padding: 10px;font-size: 15px;background-color: rgba(0,255,0,.3);position: absolute;bottom: 38px;width: 100%;}
+      .hidden {
+        display: none;
+      }
+      .personal {
+        background-color: rgba(0,0,255, .2);
+      }
     </style>
   </head>
   <body>
     <ul id="messages"></ul>
+    <div id="type_msg" class="hidden"></div>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
