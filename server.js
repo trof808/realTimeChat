@@ -28,20 +28,26 @@ io.on('connection', (socket) => {
 
   console.log('user: ' + guestName + ' connected');
 
-  socket.on('send message', (msg) => {
-    io.emit('send message', msg);
-    console.log('user: ' + socket.id + ' send message: ' + msg);
-  })
+  handleSendingMessages(socket, nickNames);
 
   userDisconnectionHandler(socket, nickNames);
 })
 
-
+const handleSendingMessages = (socket, nickNames) => {
+  socket.on('send message', (msg) => {
+    socket.broadcast.emit('send message', {
+      message: msg,
+      username: nickNames[socket.id]
+    });
+    socket.emit('my message', msg);
+    console.log('user: ' + socket.id + ' send message: ' + msg);
+  })
+};
 
 const assignGuestName = (socket, guestNumber, nickNames) => {
   guestName = 'guest_'+guestNumber;
   nickNames[socket.id] = guestName;
-  io.emit('user connected', guestName);
+  socket.broadcast.emit('user connected', guestName);
   socket.emit('nameResult', {
     success: true,
     name: guestName

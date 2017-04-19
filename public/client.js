@@ -15,8 +15,12 @@ $(function() {
     return false;
   });
 
-  socket.on('send message', (msg) => {
-    $('#messages').append($('<li>').text(msg));
+  socket.on('send message', (result) => {
+    $('#messages').append($('<li>').html('<strong>' + result.username + '</strong> ' + result.message));
+  });
+
+  socket.on('my message', (msg) => {
+    $('#messages').append($('<li class="personal">').html('<strong>you:</strong> ' + msg));
   });
 
   socket.on('nameResult', (result) => {
